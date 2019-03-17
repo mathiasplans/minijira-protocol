@@ -52,10 +52,10 @@ public abstract class Message {
         outputStream.writeInt(type.getAsInt());
 
         // Send the length of the message
-        outputStream.writeInt(out.length);
+        outputStream.writeInt(message.length);
 
         // Send the data of the message
-        outputStream.write(out);
+        outputStream.write(message);
     }
 
     public String readMessage() throws IOException {
