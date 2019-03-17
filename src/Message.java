@@ -37,7 +37,7 @@ public abstract class Message {
                     sendMessage(new String(data), MessageType.ERROR);
                 break;
             case SETSTATUSTASK:
-                if(!updateTimeTask(data))
+                if(!setStatusTask(data))
                     sendMessage(new String(data), MessageType.ERROR);
                 break;
             default:
