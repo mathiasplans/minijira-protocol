@@ -72,7 +72,7 @@ public abstract class Message {
         return handleMessage(messageType, data);
     }
 
-    public MessageType getMessagType(){
+    public MessageType getMessageType(){
         return lastMessage;
     }
 
