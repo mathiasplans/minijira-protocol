@@ -18,7 +18,7 @@ public abstract class Message {
         switch (type){
             case ECHO:
                 // Echo the message back
-                sendMessage(new String(data), MessageType.RESPONSE);
+                sendMessage(data, MessageType.RESPONSE);
                 break;
             case ERROR:
                 System.out.println(new String(data));
@@ -26,19 +26,19 @@ public abstract class Message {
                 break;
             case CREATETASK:
                 if(!createTask(data))
-                    sendMessage(new String(data), MessageType.ERROR);
+                    sendMessage(data, MessageType.ERROR);
                 break;
             case REMOVETASK:
                 if(!removeTask(data))
-                    sendMessage(new String(data), MessageType.ERROR);
+                    sendMessage(data, MessageType.ERROR);
                 break;
             case UPDATETIMETASK:
                 if(!updateTimeTask(data))
-                    sendMessage(new String(data), MessageType.ERROR);
+                    sendMessage(data, MessageType.ERROR);
                 break;
             case SETSTATUSTASK:
                 if(!setStatusTask(data))
-                    sendMessage(new String(data), MessageType.ERROR);
+                    sendMessage(data, MessageType.ERROR);
                 break;
             default:
                 /* Handle error here, right now do nothing */
@@ -47,10 +47,7 @@ public abstract class Message {
         return new String(data);
     }
 
-    public void sendMessage(String message, MessageType type) throws IOException {
-        // Convert the string to byte array
-        byte[] out = message.getBytes(StandardCharsets.UTF_8);
-
+    public void sendMessage(byte[] message, MessageType type) throws IOException {
         // Send the type of the message
         outputStream.writeInt(type.getAsInt());
 
