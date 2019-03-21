@@ -1,5 +1,6 @@
+package Messages;
+
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 public class Message {
     private DataOutputStream outputStream;

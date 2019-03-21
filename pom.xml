@@ -5,19 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- maven-compiler-plugin -->
-    <build>
+    <!--build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version> <!--some error here?: org.apache.maven.plugins:maven-compiler-plugin:3.7.0' not found-->
+                <version>3.8.0</version> <!-some error here?: org.apache.maven.plugins:maven-compiler-plugin:3.7.0' not found>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build-->
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
 
     <groupId>ee.ut</groupId>
     <version>0.1</version>
