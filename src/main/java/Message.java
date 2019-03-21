@@ -1,14 +1,16 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public abstract class Message {
+public class Message {
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
     private MessageType lastMessage;
+    private JiraMessageHandler msgHandler;
 
-    public Message(DataOutputStream outputStream, DataInputStream inputStream){
+    public Message(DataOutputStream outputStream, DataInputStream inputStream, JiraMessageHandler handler){
         this.outputStream = outputStream;
         this.inputStream = inputStream;
+        this.msgHandler = handler;
     }
 
     private String handleMessage(MessageType type, byte[] data) throws IOException {
@@ -25,19 +27,19 @@ public abstract class Message {
                 data = new byte[0];
                 break;
             case CREATETASK:
-                if(!createTask(data))
+                if(!msgHandler.createTask(data))
                     sendMessage(data, MessageType.ERROR);
                 break;
             case REMOVETASK:
-                if(!removeTask(data))
+                if(!msgHandler.removeTask(data))
                     sendMessage(data, MessageType.ERROR);
                 break;
             case UPDATETIMETASK:
-                if(!updateTimeTask(data))
+                if(!msgHandler.updateTimeTask(data))
                     sendMessage(data, MessageType.ERROR);
                 break;
             case SETSTATUSTASK:
-                if(!setStatusTask(data))
+                if(!msgHandler.setStatusTask(data))
                     sendMessage(data, MessageType.ERROR);
                 break;
             default:
@@ -76,31 +78,4 @@ public abstract class Message {
         return lastMessage;
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
-    public abstract boolean createTask(byte[] data);
-
-    /**
-     *
-     * @param data
-     * @return
-     */
-    public abstract boolean removeTask(byte[] data);
-
-    /**
-     *
-     * @param data
-     * @return
-     */
-    public abstract boolean updateTimeTask(byte[] data);
-
-    /**
-     *
-     * @param data
-     * @return
-     */
-    public abstract boolean setStatusTask(byte[] data);
 }
