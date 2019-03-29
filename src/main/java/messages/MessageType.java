@@ -1,4 +1,4 @@
-package Messages;
+package messages;
 
 public enum MessageType {
 
@@ -44,17 +44,17 @@ public enum MessageType {
     SETSTATUSTASK(7),
 
     /**
-     * Server requests the task list from another server
+     * server requests the task list from another server
      */
     GETSERVERTASKLIST(8),
 
     /**
-     * Client requests the task list from server
+     * client requests the task list from server
      */
     GETTASKLIST(9),
 
     /**
-     * Client sends login credentials so the server knows if
+     * client sends login credentials so the server knows if
      * this user has permission to remove tasks.
      */
     LOGIN(10);

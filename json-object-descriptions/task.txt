@@ -7,18 +7,14 @@
   "taskDescription": "Write some code",
   "taskPriority": 1,
   "createdBy": 350681, // user id
-  "deadline": {
-    "year": 2019,
-    "month": 5,
-    "day": 16
-  },
+  "deadline": 16532876543, // milliseconds since 1970 for java.util.Date constructor
   "dateCreated": {
     "year": 2019,
     "month": 1,
     "day": 16
   },
   "masterTask": null,
-  "assignedEmployees": [
+  "assignedEmployees": [ // people who should complete this task
     350681,
     350682
     ]
