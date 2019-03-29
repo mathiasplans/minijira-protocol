@@ -1,0 +1,25 @@
+// example json object for tasks
+
+{
+  "taskId": 20190516002,
+  "isCompleted": false,
+  "title": "Task 1",
+  "taskDescription": "Write some code",
+  "taskPriority": 1,
+  "createdBy": 350681, // user id
+  "deadline": {
+    "year": 2019,
+    "month": 5,
+    "day": 16
+  },
+  "dateCreated": {
+    "year": 2019,
+    "month": 1,
+    "day": 16
+  },
+  "masterTask": null,
+  "assignedEmployees": [
+    350681,
+    350682
+    ]
+}
