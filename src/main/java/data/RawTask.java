@@ -15,4 +15,5 @@ public class RawTask {
     public Long dateCreatedMS = null;   // milliseconds since 1970
     public Long masterTaskId = null;
     public long[] assignedEmployees = null;
+    public long[] boards;               // Projects/board/whatever where this task belongs
 }
