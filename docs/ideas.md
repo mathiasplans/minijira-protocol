@@ -47,14 +47,16 @@ Selle probleemi saab lahendada GSON-i trikkidega või ühe teise meetodiga, mida
 
 ```java
 enum MessageType {
-   CREATE_TASK(0),
-   ERROR(1);
+   CREATE_TASK(0, CreateTask.class),
+   ERROR(1, Error.class);
    // jne
 
    private final int type;
+   private final Class class;
 
-   MessageType(int type) {
+   MessageType(int type, Class class) {
       this.type = type;
+      this.class = class;
    }
 
    public int getAsInt() {
@@ -62,6 +64,8 @@ enum MessageType {
    }
 
    MessageClass parseMessageClass(Gson gson, byte[] data){
+      return gson.fromJson(String.valueOf(data), class);
+      /*
       switch (this){
            case CREATE_TASK:
                return gson.fromJson(String.valueOf(data), CreateTask.class);
@@ -69,6 +73,7 @@ enum MessageType {
                return gson.fromJson(String.valueOf(data), Error.class);
            // jne
       }
+      */
    }
 }
 
