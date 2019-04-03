@@ -65,15 +65,7 @@ enum MessageType {
 
    MessageClass parseMessageClass(Gson gson, byte[] data){
       return gson.fromJson(String.valueOf(data), class);
-      /*
-      switch (this){
-           case CREATE_TASK:
-               return gson.fromJson(String.valueOf(data), CreateTask.class);
-           case ERROR:
-               return gson.fromJson(String.valueOf(data), Error.class);
-           // jne
-      }
-      */
+      CreateTaskMessage
    }
 }
 

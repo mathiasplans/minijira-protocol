@@ -1,56 +1,89 @@
 package messages;
 
+import messages.messagetypes.*;
+
 import java.io.*;
 
 public class Message {
+    private Session session;
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
     private MessageType lastMessage;
     private JiraMessageHandler msgHandler;
 
-    public Message(DataOutputStream outputStream, DataInputStream inputStream, JiraMessageHandler handler){
+    public Message(Session session, DataOutputStream outputStream, DataInputStream inputStream, JiraMessageHandler handler) {
+        this.session = session;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
         this.msgHandler = handler;
+
+        if (session != null) {
+            try {
+                sendMessage(new SetSessionMessage(session));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
-    private String handleMessage(MessageType type, byte[] data) throws IOException {
+    private MessageClass handleMessage(MessageType type, byte[] data) throws IOException {
         // TODO: the packet should also have an ID, so the server/client knows which message was responsed to
         // TODO: if needed, create an enum for error types. Just sending error is cryptic
         lastMessage = type;
+        MessageClass messageClass = MessageClass.parseMessageClass(data, type);
+        ErrorMessage errorMessage = null;
         switch (type){
             case ECHO:
                 // Echo the message back
-                sendMessage(data, MessageType.RESPONSE);
+                if (messageClass != null)
+                    sendMessage(new ResponseMessage((byte[]) messageClass.getData()));
                 break;
             case ERROR:
-                System.out.println(new String(data));
-                data = new byte[0];
+                if (messageClass != null)
+                    System.out.println(messageClass.getData());
+                else
+                    System.out.println(new String(data));
+                //data = new byte[0];
                 break;
             case CREATETASK:
-                if(!msgHandler.createTask(data))
-                    sendMessage(data, MessageType.ERROR);
+                errorMessage = msgHandler.createTask((CreateTaskMessage) messageClass);
                 break;
             case REMOVETASK:
-                if(!msgHandler.removeTask(data))
-                    sendMessage(data, MessageType.ERROR);
+                errorMessage = msgHandler.removeTask((RemoveTaskMessage) messageClass);
                 break;
-            case UPDATETIMETASK:
-                if(!msgHandler.updateTimeTask(data))
-                    sendMessage(data, MessageType.ERROR);
+            case UPDATETASK:
+                errorMessage = msgHandler.updateTask((UpdateTaskMessage) messageClass);
                 break;
-            case SETSTATUSTASK:
-                if(!msgHandler.setStatusTask(data))
-                    sendMessage(data, MessageType.ERROR);
+            case LOGIN:
+                errorMessage = msgHandler.login((LoginMessage) messageClass);
+                break;
+            case SETSESSION:
+                errorMessage = msgHandler.setSession((SetSessionMessage) messageClass);
+                break;
+            case GETPROJECTLIST:
+                errorMessage = msgHandler.getProjectList((GetProjectListMessage) messageClass);
+                break;
+            case SETPROJECTLIST:
+                errorMessage = msgHandler.setProjectList((SetProjectListMessage) messageClass);
+                break;
+            case GETPROJECT:
+                errorMessage = msgHandler.getProject((GetProjectMessage) messageClass);
+                break;
+            case SETPROJECT:
+                errorMessage = msgHandler.setProject((SetProjectMessage) messageClass);
+                break;
+            case GETSERVERTASKLIST:
+                errorMessage = msgHandler.getServerTaskList((GetServerTaskListMessage) messageClass);
                 break;
             default:
-                /* Handle error here, right now do nothing */
+                System.out.println("Received unknown message type.");
         }
-
-        return new String(data);
+        if (errorMessage != null)
+            sendMessage(errorMessage);
+        return messageClass;
     }
 
-    public void sendMessage(byte[] message, MessageType type) throws IOException {
+    private void sendMessage(byte[] message, MessageType type) throws IOException {
         // Send the type of the message
         outputStream.writeInt(type.getAsInt());
 
@@ -61,7 +94,11 @@ public class Message {
         outputStream.write(message);
     }
 
-    public String readMessage() throws IOException {
+    public void sendMessage(MessageClass messageClass) throws IOException {
+        sendMessage(messageClass.toJsonBytes(), messageClass.getMessageType());
+    }
+
+    public MessageType readMessage() throws IOException {
         // Get the type of message
         MessageType messageType = MessageType.getMessageType(inputStream.readInt());
 
@@ -71,8 +108,8 @@ public class Message {
         // Get the data
         byte[] data = new byte[messageLen];
         inputStream.readFully(data);
-
-        return handleMessage(messageType, data);
+        handleMessage(messageType, data);
+        return messageType;
     }
 
     public MessageType getMessageType(){
