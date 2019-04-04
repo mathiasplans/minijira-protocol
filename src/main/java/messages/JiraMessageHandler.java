@@ -3,8 +3,7 @@ package messages;
 import messages.messagetypes.*;
 
 public interface JiraMessageHandler {
-
-    //boolean receiveMessage(MessageClass message);
+    // TODO: add missing methods for other message types.
 
     ErrorMessage createTask(CreateTaskMessage message);
 
@@ -15,8 +14,6 @@ public interface JiraMessageHandler {
     ErrorMessage updateTask(UpdateTaskMessage message);
 
     ErrorMessage getServerTaskList(GetServerTaskListMessage message);
-
-    //ErrorMessage getTaskList(GetTaskListMessage message);
 
     /**
      * Server sends session information back to client upon successful login.

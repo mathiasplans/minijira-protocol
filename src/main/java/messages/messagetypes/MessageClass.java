@@ -25,10 +25,20 @@ public abstract class MessageClass {
 
     public abstract MessageType getMessageType();
 
+    /**
+     * Serialize the data field of this message.
+     * @return a byte[] that contains the serialized json string (in UTF-8 encoding).
+     */
     public byte[] toJsonBytes() {
         return gson.toJson(data).getBytes(StandardCharsets.UTF_8);
     }
 
+    /**
+     * Deserialize a byte[] based on the message type.
+     * @param data byte[]
+     * @param type MessageType
+     * @return the deserialized MessageClass or null if the message type is unknown.
+     */
     public static MessageClass parseMessageClass(byte[] data, MessageType type) {
         switch (type) {
             case GETPROJECT:

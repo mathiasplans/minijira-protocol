@@ -34,7 +34,7 @@ public enum MessageType {
     REMOVETASK(5),
 
     /**
-     * Update the spent time on task.
+     * Update the task.
      */
     UPDATETASK(6),
 

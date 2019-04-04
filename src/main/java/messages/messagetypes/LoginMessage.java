@@ -7,6 +7,14 @@ import messages.MessageType;
 import java.nio.charset.StandardCharsets;
 
 public class LoginMessage extends MessageClass {
+    /**
+     * Client->Server
+     *
+     * Client tries to log in.
+     * Server should check if the username and password are correct and send back a SetSessionMessage that contains
+     * a new Session object so next time when the user connects, the client can send a SetSessionMessage to the server
+     * first with the same Session object and continue without having to send the username and password.
+     */
     public LoginMessage(RawLogin data) {
         super(data);
     }
