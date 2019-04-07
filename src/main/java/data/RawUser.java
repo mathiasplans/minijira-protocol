@@ -11,6 +11,7 @@ public class RawUser {
     public String userEmail = null;
     public Long lastOnlineMS = null;      // date in milliseconds since 1970, when the user last logged in
     public long[] projects = null;      // project IDs where this user collaborates
+    // TODO: make enum for the user rights
     public int[] projectRights = null;  // user rights in projects where this user collaborates; projects.length == projectRights.length
                                         // rights: 0 - no rights, 1 - can see tasks, 2 - can create tasks,
                                         // 3 - can create and complete tasks, 4 - all rights: manage other users, delete tasks

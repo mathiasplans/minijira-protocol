@@ -1,5 +1,7 @@
 package messages;
 
+import data.RawUser;
+
 public class Session {
     private static final int SESSION_DURATION_MS = 30*60*1000; // session expires in 30 minutes.
 

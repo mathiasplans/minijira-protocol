@@ -26,7 +26,7 @@ public class SecurityHelper {
     public static byte[] generateSalt() {
         // generate the salt
         SecureRandom rng = new SecureRandom();
-        byte[] salt = new byte[64];
+        byte[] salt = new byte[16];
         rng.nextBytes(salt);
         return salt;
     }

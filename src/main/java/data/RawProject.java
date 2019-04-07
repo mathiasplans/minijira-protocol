@@ -1,7 +1,5 @@
 package data;
 
-import java.util.List;
-
 public class RawProject {
     public long projectId = -1;
     public RawTask[] tasks = null;
