@@ -19,10 +19,10 @@ public interface JiraMessageHandler {
     /**
      * Server sends session information back to client upon successful login.
      * Client should remember the session information to connect to server again without login.
-     * @param sessionKey the session key, 16 bytes.
+     * @param session the session key, 16 bytes.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    RawError setSession(byte[] sessionKey);
+    RawError setSession(RawSession session);
 
     /**
      * Client sends user login credentials when connecting for the first time.

@@ -1,10 +1,8 @@
 package messages;
 
 import com.google.gson.Gson;
-import data.RawLogin;
-import data.RawProject;
-import data.RawProjectNameList;
-import data.RawTask;
+import data.*;
+
 import java.nio.charset.StandardCharsets;
 
 public enum MessageType {
@@ -70,7 +68,7 @@ public enum MessageType {
      * Server sends session information back to client upon successful login.
      * Client should remember the session information to connect to server again without login.
      */
-    SETSESSION(11, Session.class),
+    SETSESSION(11, RawSession.class),
 
     /**
      * Client requests the list of projects from server.

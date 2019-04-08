@@ -3,6 +3,7 @@ package messages;
 import data.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class ProtocolConnection {
     private Session session;
@@ -65,7 +66,7 @@ public class ProtocolConnection {
                 errorMessage = msgHandler.login((RawLogin) messageClass);
                 break;
             case SETSESSION:
-                errorMessage = msgHandler.setSession((byte[]) messageClass);
+                errorMessage = msgHandler.setSession((RawSession) messageClass);
                 break;
             case GETPROJECTLIST:
                 errorMessage = msgHandler.getProjectList();
@@ -96,6 +97,8 @@ public class ProtocolConnection {
 
         // Send the length of the message
         outputStream.writeInt(message.length);
+
+        String s = new String(message, StandardCharsets.UTF_8);
 
         // Send the data of the message
         outputStream.write(message);
