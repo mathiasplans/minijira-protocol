@@ -1,13 +1,11 @@
 package messages;
 
-import data.RawUser;
-
 public class Session {
     private static final int SESSION_DURATION_MS = 30*60*1000; // session expires in 30 minutes.
 
     byte[] sessionKey;
     long sessionid;
-    long userID;
+    long userId;
     long timeExpired;
 
     String clientIP;
@@ -19,12 +17,12 @@ public class Session {
         return sessionKey;
     }
 
-    public long getSessionid() {
+    public long getSessionId() {
         return sessionid;
     }
 
-    public long getUserID() {
-        return userID;
+    public long getUserId() {
+        return userId;
     }
 
     public long getTimeExpired() {
@@ -62,7 +60,7 @@ public class Session {
     public Session(byte[] sessionKey, long sessionid, long userID, String clientIP, int clientPort, String serverIP, int serverPort) {
         this.sessionKey = sessionKey;
         this.sessionid = sessionid;
-        this.userID = userID;
+        this.userId = userID;
         this.timeExpired = System.currentTimeMillis() + SESSION_DURATION_MS;
         this.clientIP = clientIP;
         this.clientPort = clientPort;

@@ -1,61 +1,61 @@
 package messages;
 
-import messages.messagetypes.*;
+import data.*;
 
 public interface JiraMessageHandler {
     // TODO: add missing methods for other message types.
 
-    ErrorMessage createTask(CreateTaskMessage message);
+    RawError createTask(RawTask newTask);
 
 
-    ErrorMessage removeTask(RemoveTaskMessage message);
+
+    RawError removeTask(Long taskId);
 
 
-    ErrorMessage updateTask(UpdateTaskMessage message);
+    RawError updateTask(RawTask updatedTask);
 
-    ErrorMessage getServerTaskList(GetServerTaskListMessage message);
+    RawError getServerTaskList(Object unimplemented);
 
     /**
      * Server sends session information back to client upon successful login.
      * Client should remember the session information to connect to server again without login.
-     * @param session session information
+     * @param sessionKey the session key, 16 bytes.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage setSession(SetSessionMessage session);
+    RawError setSession(byte[] sessionKey);
 
     /**
-     * Client sends user login credentials.
-     * @param message a message that contains the username or email and password.
+     * Client sends user login credentials when connecting for the first time.
+     * @param rawLogin a message that contains the username or email and password.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage login(LoginMessage message);
+    RawError login(RawLogin rawLogin);
 
     /**
      * Client requests the list of projects.
-     * @param message a message that contains the user Id of the user whose projects should be returned.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage getProjectList(GetProjectListMessage message);
+    RawError getProjectList();
 
     /**
      * Server returns the list of projects for the given user.
-     * @param message a message that contains the project names and project IDs.
+     * @param projectNames a message that contains the project names and project IDs.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage setProjectList(SetProjectListMessage message);
+    RawError setProjectList(RawProjectNameList projectNames);
 
     /**
      * Client requests the tasklist of a project.
-     * @param message a message that contains the project id.
+     * @param projectId a message that contains the project id.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage getProject(GetProjectMessage message);
+    RawError getProject(Long projectId);
 
     /**
      * Server returns the tasklist of a project.
-     * @param message a message that contains the task list.
+     * @param rawProject a message that contains the task list.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
-    ErrorMessage setProject(SetProjectMessage message);
+    RawError setProject(RawProject rawProject);
 
 }
