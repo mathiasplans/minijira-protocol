@@ -15,7 +15,7 @@ public enum MessageType {
     /**
      * An error occurred while handling the command/message.
      */
-    ERROR(1, String.class),
+    ERROR(1, RawError.class),
 
     /**
      * Acknowledgement.

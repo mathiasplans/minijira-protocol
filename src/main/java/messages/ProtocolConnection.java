@@ -48,7 +48,7 @@ public class ProtocolConnection {
                 break;
             case ERROR:
                 if (messageClass != null)
-                    System.out.println(((RawError)messageClass).error);
+                    System.out.println("Received error: " + ((RawError)messageClass).error);
                 else
                     System.out.println(new String(data));
                 //data = new byte[0];
@@ -104,7 +104,7 @@ public class ProtocolConnection {
         outputStream.write(message);
     }
     public void sendMessage(Object rawObject, MessageType messageType) throws IOException {
-        if (rawObject.getClass() != messageType.getTypeclass())
+        if (messageType.getTypeclass() != null && rawObject != null && rawObject.getClass() != messageType.getTypeclass())
             throw new RuntimeException("This message type requires rawObject of type " + messageType.getTypeclass().toString());
         sendMessage(messageType.toJsonBytes(rawObject), messageType);
     }

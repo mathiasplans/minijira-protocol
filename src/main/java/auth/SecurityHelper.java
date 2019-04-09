@@ -14,7 +14,7 @@ public class SecurityHelper {
      * @return password hash for the given password and salt.
      */
     public static byte[] passwordToHash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        int iterationCount = 1_000_000;
+        int iterationCount = 1000;
 
         // output length of SHA-256 (32 bytes)
         int outputLengthBits = 256;
