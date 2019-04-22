@@ -1,6 +1,7 @@
 package messages;
 
 import data.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -34,7 +35,7 @@ public class ProtocolConnection {
         }
     }
 
-    private Object handleMessage(MessageType type, byte[] data) throws IOException {
+    private Object handleMessage(@NotNull MessageType type, byte[] data) throws IOException {
         // TODO: the packet should also have an ID, so the server/client knows which message was responsed to
         // TODO: if needed, create an enum for error types. Just sending error is cryptic
         lastMessage = type;
@@ -52,6 +53,9 @@ public class ProtocolConnection {
                 else
                     System.out.println(new String(data));
                 //data = new byte[0];
+                break;
+            case RESPONSE:
+                // Do nothing
                 break;
             case CREATETASK:
                 errorMessage = msgHandler.createTask((RawTask) messageClass);
@@ -91,7 +95,7 @@ public class ProtocolConnection {
         return messageClass;
     }
 
-    private void sendMessage(byte[] message, MessageType type) throws IOException {
+    private void sendMessage(@NotNull byte[] message, @NotNull MessageType type) throws IOException {
         // Send the type of the message
         outputStream.writeInt(type.getAsInt());
 
@@ -103,6 +107,7 @@ public class ProtocolConnection {
         // Send the data of the message
         outputStream.write(message);
     }
+
     public void sendMessage(Object rawObject, MessageType messageType) throws IOException {
         if (messageType.getTypeclass() != null && rawObject != null && rawObject.getClass() != messageType.getTypeclass())
             throw new RuntimeException("This message type requires rawObject of type " + messageType.getTypeclass().toString());
