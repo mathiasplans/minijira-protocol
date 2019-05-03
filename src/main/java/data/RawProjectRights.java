@@ -61,6 +61,7 @@ public enum RawProjectRights {
  *
  * Edit username, password and email.
  * Create project and become BOSS.
+ * Delete own account.
  *
  *
  *
