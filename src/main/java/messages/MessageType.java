@@ -192,7 +192,12 @@ public enum MessageType {
     /**
      * Server returns the list of users on a project
      */
-    SETPROJECTUSERS(17, null);
+    SETPROJECTUSERS(17, null),
+
+    /**
+     * Server returns info on a user, client sends limited info to register a user.
+     */
+    USERINFO(18, RawUser.class);
 
     private final int type;
     private final Class typeclass;
