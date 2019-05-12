@@ -41,7 +41,7 @@
     </properties>
 
     <groupId>ee.ut</groupId>
-    <version>0.1</version>
+    <version>0.2</version>
     <artifactId>minijira-protocol</artifactId>
 
 </project>

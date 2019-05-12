@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import data.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public enum MessageType {
 
@@ -58,6 +59,8 @@ public enum MessageType {
     /**
      * Task removal request Return error if client
      * does not have permission or has not logged in.
+     *
+     *
      * TODO: Should a task shared between projects be deleted from all projects or only the ones that the user has access to.
      *
      * Direction: client -> server.
@@ -67,12 +70,29 @@ public enum MessageType {
 
     /**
      * Update the task.
-     * TODO: What rights are neccesary? What if task is shared between projects.
+     * if task is shared between projects, the task changes in both projects.
+     * required RawProjectRights.CONTRIBUTOR rights.
      *
      * Direction: client -> server.
      * Expected answer: TODO: Is conformation neccesary.
      */
     UPDATETASK(6, RawTask.class),
+
+    /**
+     * Client requests the task with the given ID
+     *
+     * Direction: client -> server.
+     * Expected answer: TODO: Is conformation neccesary.
+     */
+    GETTASK(7, Long.class),
+
+    /**
+     * Client requests the task with the given ID
+     *
+     * Direction: client -> server.
+     * Expected answer: TODO: Is conformation neccesary.
+     */
+    SETTASK(8, RawTask.class),
 
 
 
@@ -101,7 +121,7 @@ public enum MessageType {
      *
      * User can only do following things with his account:
      * 1. Edit username
-     * 2. Edit password TODO: how?
+     * //2. Edit password TODO: how?
      * 3. Edit email.
      * 4. TODO: Add or remove his projects. Is this the right place for it?
      *
@@ -117,16 +137,14 @@ public enum MessageType {
      * server requests the task list of a project with the given project id from another server.
      *
      * Direction: server -> server.
-     * Expected answer: TODO: Is conformation neccesary.
+     * Expected answer: ERROR or TODO: a new Raw server data class that contains all projects, tasks and users
      */
-    GETSERVERTASKLIST(8, Long.class),
+    GETSERVERTASKLIST(9, Long.class),
 
     /*
      * client requests the task list from server.
      */
     //GETTASKLIST(9),
-
-
 
     /**
      * client sends login credentials so the server knows if
@@ -181,18 +199,27 @@ public enum MessageType {
      */
     SETPROJECT(15, RawProject.class),
 
+    /**
+     * Client updates a project. Should be used for removing and adding tasks to projects.
+     * Client can set a repository url for a project.
+     *
+     * Direction: client -> server.
+     * Expected answer: no answer.
+     */
+    UPDATEPROJECT(16, RawProject.class),
+
 
 
     /**
      * Client requests the list of users on a project
      */
     //TODO: implement usages
-    GETPROJECTUSERS(16, null),
+    GETPROJECTUSERS(17, null),
 
     /**
      * Server returns the list of users on a project
      */
-    SETPROJECTUSERS(17, null);
+    SETPROJECTUSERS(18, null);
 
     private final int type;
     private final Class typeclass;

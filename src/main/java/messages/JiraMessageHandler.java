@@ -7,12 +7,13 @@ public interface JiraMessageHandler {
 
     RawError createTask(RawTask newTask);
 
-
-
     RawError removeTask(Long taskId);
 
-
     RawError updateTask(RawTask updatedTask);
+
+    RawError getTask(Long taskId);
+
+    RawError setTask(RawTask task);
 
     RawError getServerTaskList(Object unimplemented);
 
@@ -53,9 +54,16 @@ public interface JiraMessageHandler {
 
     /**
      * Server returns the tasklist of a project.
-     * @param rawProject a message that contains the task list.
+     * @param rawProject a message that contains the project.
      * @return an ErrorMessage that contains description of the error, null otherwise.
      */
     RawError setProject(RawProject rawProject);
+
+    /**
+     * Client tries to update a project
+     * @param rawProject a RawProject that contains the updated project
+     * @return an ErrorMessage that contains description of the error, null otherwise.
+     */
+    RawError updateProject(RawProject rawProject);
 
 }

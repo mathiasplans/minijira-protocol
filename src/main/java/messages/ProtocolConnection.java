@@ -87,6 +87,15 @@ public class ProtocolConnection {
             case GETSERVERTASKLIST:
                 errorMessage = msgHandler.getServerTaskList(messageClass);
                 break;
+            case SETTASK:
+                errorMessage = msgHandler.setTask((RawTask) messageClass);
+                break;
+            case GETTASK:
+                errorMessage = msgHandler.getTask((Long) messageClass);
+                break;
+            case UPDATEPROJECT:
+                errorMessage = msgHandler.updateProject((RawProject) messageClass);
+                break;
             default:
                 System.out.println("Received unknown message type.");
         }
