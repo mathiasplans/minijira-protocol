@@ -66,4 +66,11 @@ public interface JiraMessageHandler {
      */
     RawError updateProject(RawProject rawProject);
 
+    /**
+     * Client or server shares data of a user account.
+     * @param rawUser a message that contains full or partial info on a user.
+     * @return an ErrorMessage that contains description of the error, null otherwise.
+     */
+    RawError userInfo(RawUser rawUser);
+
 }

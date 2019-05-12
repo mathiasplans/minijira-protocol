@@ -96,6 +96,8 @@ public class ProtocolConnection {
             case UPDATEPROJECT:
                 errorMessage = msgHandler.updateProject((RawProject) messageClass);
                 break;
+            case USERINFO:
+                errorMessage = msgHandler.userInfo((RawUser) messageClass);
             default:
                 System.out.println("Received unknown message type.");
         }
