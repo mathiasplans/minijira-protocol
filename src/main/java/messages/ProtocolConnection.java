@@ -89,6 +89,7 @@ public class ProtocolConnection {
                 break;
             case USERINFO:
                 errorMessage = msgHandler.userInfo((RawUser) messageClass);
+                break;
             default:
                 System.out.println("Received unknown message type.");
         }
