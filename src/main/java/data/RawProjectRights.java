@@ -44,6 +44,10 @@ public enum RawProjectRights {
     RawProjectRights(int rightsValue) {
         this.rightsValue = rightsValue;
     }
+
+    public int getRightsValue() {
+        return rightsValue;
+    }
 }
 
 /*
